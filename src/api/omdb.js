@@ -12,7 +12,7 @@ export const searchMovies = async (title) => {
     });
 
     return response.data;
-};
+}
 
 export const getMovie = async (id) => {
     const response = await axios.get(BASE_URL, {
