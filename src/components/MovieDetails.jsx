@@ -32,7 +32,7 @@ return(
 Close
 </button>
 
-<img src={movie.Poster}/>
+<img src={movie.Poster} alt={movie.title}/>
 
 <div>
 
