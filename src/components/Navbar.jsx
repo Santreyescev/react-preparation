@@ -1,15 +1,31 @@
 import "../styles/Navbar.css";
 
-export default function Navbar(){
+export default function Navbar() {
+  return (
+    <header className="navbar">
+      <div className="logo">
+        🎬 Movie Explorer
+      </div>
 
-return(
+      <nav>
+        <ul className="nav-links">
+          <li>
+            <a href="/">Home</a>
+          </li>
 
-<nav>
+          <li>
+            <a href="#movies">Movies</a>
+          </li>
 
-<h1>🎬 Movie Explorer</h1>
+          <li>
+            <a href="#favorites">Favorites</a>
+          </li>
 
-</nav>
-
-);
-
+          <li>
+            <a href="#about">About</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+  );
 }

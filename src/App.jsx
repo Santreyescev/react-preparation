@@ -5,38 +5,33 @@ import Navbar from "./components/Navbar";
 import Search from "./components/Search";
 import MovieGrid from "./components/MovieGrid";
 import MovieDetails from "./components/MovieDetails";
+import Footer from "./components/Footer";
 
 function App() {
+  const [movies, setMovies] = useState([]);
+  const [selected, setSelected] = useState(null);
 
-const [movies,setMovies]=useState([]);
-const [selected,setSelected]=useState(null);
+  return (
+    <>
+      <Navbar />
 
-return (
+      <Search setMovies={setMovies} />
 
-<div>
+      <MovieGrid
+        movies={movies}
+        setSelected={setSelected}
+      />
 
-<Navbar/>
+      {selected && (
+        <MovieDetails
+          id={selected}
+          close={() => setSelected(null)}
+        />
+      )}
 
-<Search
-setMovies={setMovies}
-/>
-
-<MovieGrid
-movies={movies}
-setSelected={setSelected}
-/>
-
-{selected &&
-<MovieDetails
-id={selected}
-close={()=>setSelected(null)}
-/>
-}
-
-</div>
-
-);
-
+      <Footer />
+    </>
+  );
 }
 
 export default App;

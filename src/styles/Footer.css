@@ -1,0 +1,37 @@
+.footer {
+  background: #111;
+  color: white;
+  padding: 40px 20px;
+  margin-top: 60px;
+  text-align: center;
+}
+
+.footer-content h3 {
+  color: #ff4b2b;
+  margin-bottom: 10px;
+}
+
+.footer-content p {
+  margin: 8px 0;
+}
+
+.footer-links {
+  margin: 20px 0;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  color: #ff4b2b;
+}
+
+.copyright {
+  margin-top: 20px;
+  color: #999;
+  font-size: 14px;
+}
