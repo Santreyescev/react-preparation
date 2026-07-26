@@ -1,33 +1,28 @@
-import { useState } from "react";
-import "./App.css";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import Search from "./components/Search";
-import MovieGrid from "./components/MovieGrid";
-import MovieDetails from "./components/MovieDetails";
 import Footer from "./components/Footer";
 
-function App() {
-  const [movies, setMovies] = useState([]);
-  const [selected, setSelected] = useState(null);
+import Home from "./components/Home";
+import Movies from "./components/Movies";
+import Favorites from "./components/Favorites";
+import About from "./components/About";
+import NotFound from "./components/NotFound";
 
+function App() {
   return (
     <>
       <Navbar />
 
-      <Search setMovies={setMovies} />
-
-      <MovieGrid
-        movies={movies}
-        setSelected={setSelected}
-      />
-
-      {selected && (
-        <MovieDetails
-          id={selected}
-          close={() => setSelected(null)}
-        />
-      )}
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/favorites" element={<Favorites />} />
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
 
       <Footer />
     </>

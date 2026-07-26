@@ -1,45 +1,45 @@
-import {useState} from "react";
-import {searchMovies} from "../api/omdb";
+import { useState } from "react";
+import { searchMovies } from "../api/omdb";
 import "../styles/Search.css";
 
-export default function Search({setMovies}){
+export default function Search({ setMovies }) {
+  const [text, setText] = useState("");
 
-const [text,setText]=useState("");
+  const handleSearch = async () => {
+    if (!text.trim()) return;
 
-const handleSearch=async()=>{
+    try {
+      const result = await searchMovies(text);
 
-if(!text)return;
+      if (result.Search) {
+        setMovies(result.Search);
+      } else {
+        setMovies([]);
+      }
+    } catch (error) {
+      console.error("Search error:", error);
+      setMovies([]);
+      alert(error.message);
+    }
+  };
 
-const result=await searchMovies(text);
+  return (
+    <div className="search">
+      <input
+        type="text"
+        value={text}
+        placeholder="Search movies"
+        onChange={(event) => setText(event.target.value)}
+        onKeyDown={(event) => {
+          if (event.key === "Enter") {
+            handleSearch();
+          }
+        }}
+      />
 
-if(result.Search){
-
-setMovies(result.Search);
-
-}else{
-
-setMovies([]);
-
-}
-
-};
-
-return(
-
-<div className="search">
-
-<input
-placeholder="Search movies..."
-value={text}
-onChange={(e)=>setText(e.target.value)}
-/>
-
-<button onClick={handleSearch}>
-Search
-</button>
-
-</div>
-
-);
-
+      <button onClick={handleSearch}>
+        Search
+      </button>
+    </div>
+  );
 }

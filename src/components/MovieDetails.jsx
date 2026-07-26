@@ -1,61 +1,80 @@
-import {useEffect,useState} from "react";
-
-import {getMovie} from "../api/omdb";
-
+import { useEffect, useState } from "react";
+import { getMovieDetails } from "../api/omdb";
 import "../styles/Details.css";
 
-export default function MovieDetails({id,close}){
+export default function MovieDetails({ imdbID, setSelected }) {
+  const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-const [movie,setMovie]=useState(null);
+  useEffect(() => {
+    async function loadMovie() {
+      try {
+        setLoading(true);
+        setError("");
 
-useEffect(()=>{
+        const result = await getMovieDetails(imdbID);
 
-async function load(){
+        if (result.Response === "False") {
+          throw new Error(result.Error);
+        }
 
-const result=await getMovie(id);
+        setMovie(result);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-setMovie(result);
+    loadMovie();
+  }, [imdbID]);
 
+  if (loading) {
+    return <p>Loading movie details...</p>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        <p>{error}</p>
+        <button onClick={() => setSelected(null)}>
+          Back to movies
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="movie-details">
+      <button
+        className="back-button"
+        onClick={() => setSelected(null)}
+      >
+        ← Back to movies
+      </button>
+
+      <div className="details-content">
+        <img
+          src={movie.Poster}
+          alt={movie.Title}
+          className="details-poster"
+        />
+
+        <div className="details-information">
+          <h2>{movie.Title}</h2>
+          <p><strong>Year:</strong> {movie.Year}</p>
+          <p><strong>Genre:</strong> {movie.Genre}</p>
+          <p><strong>Director:</strong> {movie.Director}</p>
+          <p><strong>Actors:</strong> {movie.Actors}</p>
+          <p><strong>Runtime:</strong> {movie.Runtime}</p>
+          <p><strong>IMDb rating:</strong> {movie.imdbRating}</p>
+
+          <h3>Plot</h3>
+          <p>{movie.Plot}</p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-load();
-
-},[id]);
-
-if(!movie)return <h2>Loading...</h2>;
-
-return(
-
-<div className="details">
-
-<button onClick={close}>
-Close
-</button>
-
-<img src={movie.Poster} alt=""/>
-
-<div>
-
-<h1>{movie.Title}</h1> <div className=""></div>
-
-<h3>{movie.Year}</h3>
-
-<h3>{movie.Genre}</h3>
-
-<h3>{movie.Runtime}</h3>
-
-<h3>⭐ {movie.imdbRating}</h3>
-
-<p>{movie.Plot}</p>
-
-<p><strong>Actors:</strong> {movie.Actors}</p>
-
-<p><strong>Director:</strong> {movie.Director}</p>
-
-</div>
-
-</div>
-
-);
-
-}

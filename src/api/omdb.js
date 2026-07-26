@@ -1,26 +1,33 @@
-import axios from "axios";
-
 const API_KEY = "a38dc1e9";
 const BASE_URL = "https://www.omdbapi.com/";
 
-export const searchMovies = async (title) => {
-    const response = await axios.get(BASE_URL, {
-        params: {
-            apikey: API_KEY,
-            s: title
-        }
-    });
+export async function searchMovies(title) {
+  const url = `${BASE_URL}?apikey=${API_KEY}&s=${encodeURIComponent(title)}`;
 
-    return response.data;
+  const response = await fetch(url);
+  const data = await response.json();
+
+  console.log("OMDb response:", data);
+
+  if (data.Response === "False") {
+    throw new Error(data.Error);
+  }
+
+  return data;
 }
 
-export const getMovie = async (id) => {
-    const response = await axios.get(BASE_URL, {
-        params: {
-            apikey: API_KEY,
-            i: id
-        }
-    });
+export async function getMovieDetails(imdbID) {
+  const url =
+    `${BASE_URL}?apikey=${API_KEY}&i=${encodeURIComponent(imdbID)}&plot=full`;
 
-    return response.data;
-};
+  const response = await fetch(url);
+  const data = await response.json();
+
+  console.log("OMDb details:", data);
+
+  if (data.Response === "False") {
+    throw new Error(data.Error);
+  }
+
+  return data;
+}

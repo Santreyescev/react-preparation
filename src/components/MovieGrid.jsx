@@ -1,3 +1,4 @@
+import "../styles/MovieGrid.css"
 import MovieCard from "./MovieCard";
 
 export default function MovieGrid({movies,setSelected}){
