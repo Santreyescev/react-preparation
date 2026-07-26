@@ -39,7 +39,7 @@ export default function Footer() {
         </div>
 
         <p className="copyright">
-          © {2026} Santiago Reyes • All Rights Reserved
+         &copy; {year} Santiago Reyes • All Rights Reserved
         </p>
       </div>
     </footer>
